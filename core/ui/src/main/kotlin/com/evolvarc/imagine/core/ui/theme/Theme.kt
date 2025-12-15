@@ -1,0 +1,114 @@
+/*
+ * Imagine is an image editor for android
+ * Copyright (c) 2024 Jaswanth Satya Dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * You should have received a copy of the Apache License
+ * along with this program.  If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
+ */
+
+package com.evolvarc.imagine.core.ui.theme
+
+import android.annotation.SuppressLint
+import android.os.Build
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.t8rin.dynamic.theme.ColorTuple
+import com.t8rin.dynamic.theme.DynamicTheme
+import com.t8rin.dynamic.theme.rememberDynamicThemeState
+import com.evolvarc.imagine.core.settings.presentation.provider.LocalSettingsState
+import com.evolvarc.imagine.core.settings.presentation.provider.rememberAppColorTuple
+import com.evolvarc.imagine.core.ui.utils.animation.FancyTransitionEasing
+import com.evolvarc.imagine.core.ui.utils.helper.DeviceInfo
+
+@SuppressLint("NewApi")
+@Composable
+fun ImagineTheme(
+    content: @Composable () -> Unit
+) {
+    val settingsState = LocalSettingsState.current
+    val context = LocalContext.current
+
+    DynamicTheme(
+        typography = rememberTypography(settingsState.font),
+        state = rememberDynamicThemeState(rememberAppColorTuple()),
+        colorBlindType = settingsState.colorBlindType,
+        defaultColorTuple = settingsState.appColorTuple,
+        dynamicColor = settingsState.isDynamicColors,
+        dynamicColorsOverride = { isNightMode ->
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.BAKLAVA && DeviceInfo.isPixel()) {
+                val colors = if (isNightMode) {
+                    dynamicDarkColorScheme(context)
+                } else {
+                    dynamicLightColorScheme(context)
+                }
+
+                ColorTuple(
+                    primary = colors.primary,
+                    secondary = colors.secondary,
+                    tertiary = colors.tertiary,
+                    surface = colors.surface
+                )
+            } else null
+        },
+        amoledMode = settingsState.isAmoledMode,
+        isDarkTheme = settingsState.isNightMode,
+        contrastLevel = settingsState.themeContrastLevel,
+        style = settingsState.themeStyle,
+        isInvertColors = settingsState.isInvertThemeColors,
+        colorAnimationSpec = tween(
+            durationMillis = 400,
+            easing = FancyTransitionEasing
+        ),
+        content = {
+            MaterialTheme(
+                motionScheme = CustomMotionScheme,
+                colorScheme = modifiedColorScheme(),
+                content = content
+            )
+        }
+    )
+}
+
+@Composable
+fun ImagineThemeSurface(
+    content: @Composable BoxScope.() -> Unit
+) {
+    ImagineTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            content = {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    content = content
+                )
+            }
+        )
+    }
+}
+
+@Composable
+private fun modifiedColorScheme(): ColorScheme = MaterialTheme.colorScheme.copy(
+    errorContainer = MaterialTheme.colorScheme.errorContainer.blend(
+        color = MaterialTheme.colorScheme.primary,
+        fraction = 0.15f
+    )
+)
