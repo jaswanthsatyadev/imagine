@@ -23,10 +23,9 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.evolvarc.imagine.core.settings.presentation.provider.LocalSettingsState
-import com.evolvarc.imagine.core.ui.utils.helper.ContextUtils.getStringLocalized
 import com.evolvarc.imagine.core.ui.utils.navigation.Screen
+import com.evolvarc.imagine.core.ui.utils.navigation.searchScreens
 import com.evolvarc.imagine.core.ui.utils.provider.LocalComponentActivity
-import java.util.Locale
 
 @Composable
 internal fun filteredScreenListFor(
@@ -67,16 +66,7 @@ internal fun filteredScreenListFor(
                 screenList
             }.let { screens ->
                 if (screenSearchKeyword.isNotEmpty() && canSearchScreens) {
-                    screens.filter {
-                        val string =
-                            context.getString(it.title) + " " + context.getString(it.subtitle)
-                        val stringEn = context.getStringLocalized(it.title, Locale.ENGLISH)
-                            .plus(" ")
-                            .plus(context.getStringLocalized(it.subtitle, Locale.ENGLISH))
-                        stringEn.contains(other = screenSearchKeyword, ignoreCase = true).or(
-                            string.contains(other = screenSearchKeyword, ignoreCase = true)
-                        )
-                    }
+                    searchScreens(screenSearchKeyword, screens, context)
                 } else screens
             }
         }

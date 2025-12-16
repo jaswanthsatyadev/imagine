@@ -11,3 +11,9 @@
 /libs/nQuant/build
 /.kotlin/errors/
 /.kotlin
+
+# Firebase
+google-services.json
+
+# Sentry
+sentry.properties
