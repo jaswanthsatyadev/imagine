@@ -66,15 +66,15 @@ sealed class Screen(
         val htmlDescription: String
     ) : Screen(
         id = -5,
-        title = R.string.libraries_info,
-        subtitle = R.string.libraries_info_sub
+        title = R.string.library_details,
+        subtitle = R.string.library_details_sub
     )
 
     @Serializable
     data object LibrariesInfo : Screen(
         id = -4,
-        title = R.string.libraries_info,
-        subtitle = R.string.libraries_info_sub
+        title = R.string.libraries,
+        subtitle = R.string.libraries_sub
     )
 
     @Serializable
@@ -834,8 +834,8 @@ sealed class Screen(
     @Serializable
     data object MeshGradients : Screen(
         id = -5,
-        title = R.string.mesh_gradients,
-        subtitle = R.string.mesh_gradients_sub
+        title = 0,
+        subtitle = 0
     ) {
          override fun searchKeywords() = listOf("gradient", "mesh", "wallpaper", "generate")
     }

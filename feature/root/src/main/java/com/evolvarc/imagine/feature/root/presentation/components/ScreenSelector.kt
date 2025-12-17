@@ -39,24 +39,17 @@ internal fun ScreenSelector(
     val childStack by component.childStack.subscribeAsState()
     val currentScreen = LocalCurrentScreen.current
 
-    SettingsBackdropWrapper(
-        currentScreen = currentScreen,
-        concealBackdropFlow = component.concealBackdropFlow,
-        settingsComponent = component.settingsComponent,
-        children = {
-            Children(
-                stack = childStack,
-                modifier = Modifier.fillMaxSize(),
-                animation = remember(component) {
-                    toolboxPredictiveBackAnimation(
-                        backHandler = component.backHandler,
-                        onBack = component::navigateBack
-                    )
-                },
-                content = { child ->
-                    child.instance.Content()
-                }
+    Children(
+        stack = childStack,
+        modifier = Modifier.fillMaxSize(),
+        animation = remember(component) {
+            toolboxPredictiveBackAnimation(
+                backHandler = component.backHandler,
+                onBack = component::navigateBack
             )
+        },
+        content = { child ->
+            child.instance.Content()
         }
     )
 

@@ -365,26 +365,23 @@ private fun SettingsButton(
     sideSheetState: DrawerState,
     isSheetSlideable: Boolean
 ) {
-    val scope = rememberCoroutineScope()
     val settingsState = LocalSettingsState.current
 
-    if (isSheetSlideable || settingsState.useFullscreenSettings) {
-        EnhancedIconButton(
-            onClick = {
-                onNavigate(Screen.Settings())
-            },
-            modifier = Modifier
-                .pulsate(
-                    range = 0.95f..1.2f,
-                    enabled = settingsState.isFirstLaunch()
-                )
-                .rotateAnimation(enabled = settingsState.isFirstLaunch())
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.Settings,
-                contentDescription = stringResource(R.string.settings)
+    EnhancedIconButton(
+        onClick = {
+            onNavigate(Screen.Settings())
+        },
+        modifier = Modifier
+            .pulsate(
+                range = 0.95f..1.2f,
+                enabled = settingsState.isFirstLaunch()
             )
-        }
+            .rotateAnimation(enabled = settingsState.isFirstLaunch())
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Settings,
+            contentDescription = stringResource(R.string.settings)
+        )
     }
 }
 
