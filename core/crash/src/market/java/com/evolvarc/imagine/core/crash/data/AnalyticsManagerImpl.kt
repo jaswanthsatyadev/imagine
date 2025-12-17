@@ -31,26 +31,34 @@ internal object AnalyticsManagerImpl : AnalyticsManager {
     override var allowCollectAnalytics: Boolean = false
 
     override fun updateAnalyticsCollectionEnabled(value: Boolean) {
-        Firebase.analytics.setAnalyticsCollectionEnabled(value)
-        allowCollectAnalytics = value
+        runCatching {
+            Firebase.analytics.setAnalyticsCollectionEnabled(value)
+            allowCollectAnalytics = value
+        }
     }
 
     override fun updateAllowCollectCrashlytics(value: Boolean) {
-        Firebase.crashlytics.isCrashlyticsCollectionEnabled = value
-        allowCollectCrashlytics = value
+        runCatching {
+            Firebase.crashlytics.isCrashlyticsCollectionEnabled = value
+            allowCollectCrashlytics = value
+        }
     }
 
     override fun sendReport(throwable: Throwable) {
         if (allowCollectCrashlytics) {
-            Firebase.crashlytics.recordException(throwable)
-            Firebase.crashlytics.sendUnsentReports()
+            runCatching {
+                Firebase.crashlytics.recordException(throwable)
+                Firebase.crashlytics.sendUnsentReports()
+            }
         }
     }
 
     override fun registerScreenOpen(screenName: String) {
         if (allowCollectAnalytics) {
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
-                param(FirebaseAnalytics.Param.CONTENT_TYPE, screenName)
+            runCatching {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
+                    param(FirebaseAnalytics.Param.CONTENT_TYPE, screenName)
+                }
             }
         }
     }

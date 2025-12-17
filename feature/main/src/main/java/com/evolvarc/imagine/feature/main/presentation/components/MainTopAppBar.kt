@@ -371,13 +371,7 @@ private fun SettingsButton(
     if (isSheetSlideable || settingsState.useFullscreenSettings) {
         EnhancedIconButton(
             onClick = {
-                if (settingsState.useFullscreenSettings) {
-                    onNavigate(Screen.Settings())
-                } else {
-                    scope.launch {
-                        sideSheetState.open()
-                    }
-                }
+                onNavigate(Screen.Settings())
             },
             modifier = Modifier
                 .pulsate(
@@ -410,7 +404,10 @@ private fun MainTitle(
             modifier = Modifier.marquee()
         ) {
             AnimatedContent(settingsState.mainScreenTitle) { title ->
-                Text(title)
+                Text(
+                    text = title.takeIf { it.isNotEmpty() } ?: stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displaySmall
+                )
             }
             if (BuildConfig.DEBUG) {
                 Icon(

@@ -16,9 +16,12 @@
  */
 package com.evolvarc.imagine.feature.media_picker.presentation.components
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -30,7 +33,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -39,6 +42,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -46,12 +50,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.evolvarc.imagine.core.domain.utils.safeCast
 import com.evolvarc.imagine.core.resources.R
+import com.evolvarc.imagine.core.ui.utils.animation.EmphasizedDecelerateEasing
 import com.evolvarc.imagine.core.ui.utils.helper.toPx
 import com.evolvarc.imagine.core.ui.widget.enhanced.longPress
 import com.evolvarc.imagine.core.ui.widget.modifier.dragHandler
@@ -190,72 +196,88 @@ internal fun MediaPickerGrid(
                 ManageExternalStorageWarning(onRequestManagePermission)
             }
         }
-        items(
+        itemsIndexed(
             items = state.mappedMedia,
-            key = {
-                val first = if (it is MediaItem.MediaViewItem) it.media.toString() else it.key
-                "$first-${state.mappedMedia.indexOf(it)}"
+            key = { _, item ->
+                if (item is MediaItem.MediaViewItem) item.media.toString() else item.key
             },
-            contentType = { it.key.startsWith("media_") },
-            span = { item ->
+            contentType = { _, item -> item.key.startsWith("media_") },
+            span = { _, item ->
                 GridItemSpan(if (item.key.isHeaderKey) maxLineSpan else 1)
             }
-        ) { item ->
-            when (item) {
-                is MediaItem.Header -> {
-                    val isChecked = rememberSaveable { mutableStateOf(false) }
-                    if (allowMultiple) {
-                        LaunchedEffect(selectedMedia.size) {
-                            // Partial check of media items should not check the header
-                            isChecked.value = selectedMedia.containsAll(item.data)
-                        }
-                    }
-                    val title = item.text
-                        .replace("Today", stringToday)
-                        .replace("Yesterday", stringYesterday)
-                    MediaStickyHeader(
-                        date = title,
-                        showAsBig = item.key.contains("big"),
-                        isCheckVisible = isCheckVisible,
-                        isChecked = isChecked,
-                        onChecked = {
-                            if (allowMultiple) {
-                                hapticFeedback.longPress()
-                                scope.launch {
-                                    isChecked.value = !isChecked.value
-                                    if (isChecked.value) {
-                                        val toAdd = item.data.toMutableList().apply {
-                                            // Avoid media from being added twice to selection
-                                            removeIf { selectedMedia.contains(it) }
-                                        }
-                                        selectedMedia.addAll(toAdd)
-                                    } else selectedMedia.removeAll(item.data)
-                                }
+        ) { index, item ->
+            // Staggered Animation
+            val itemAlpha = remember { Animatable(0f) }
+            val itemTranslationY = remember { Animatable(50f) }
+
+            LaunchedEffect(Unit) {
+                val delay = (index * 20).coerceAtMost(500)
+                itemAlpha.animateTo(1f, tween(300, delay, EmphasizedDecelerateEasing))
+                itemTranslationY.animateTo(0f, tween(400, delay, EmphasizedDecelerateEasing))
+            }
+            
+            Box(
+                modifier = Modifier.graphicsLayer {
+                    alpha = itemAlpha.value
+                    translationY = itemTranslationY.value
+                }
+            ) {
+                when (item) {
+                    is MediaItem.Header -> {
+                        val isChecked = rememberSaveable { mutableStateOf(false) }
+                        if (allowMultiple) {
+                            LaunchedEffect(selectedMedia.size) {
+                                // Partial check of media items should not check the header
+                                isChecked.value = selectedMedia.containsAll(item.data)
                             }
                         }
-                    )
-                }
-
-                is MediaItem.MediaViewItem -> {
-                    val selectionIndex by remember(selectedMedia, item.media) {
-                        derivedStateOf {
-                            selectedMedia.indexOf(item.media)
-                        }
+                        val title = item.text
+                            .replace("Today", stringToday)
+                            .replace("Yesterday", stringYesterday)
+                        MediaStickyHeader(
+                            date = title,
+                            showAsBig = item.key.contains("big"),
+                            isCheckVisible = isCheckVisible,
+                            isChecked = isChecked,
+                            onChecked = {
+                                if (allowMultiple) {
+                                    hapticFeedback.longPress()
+                                    scope.launch {
+                                        isChecked.value = !isChecked.value
+                                        if (isChecked.value) {
+                                            val toAdd = item.data.toMutableList().apply {
+                                                // Avoid media from being added twice to selection
+                                                removeIf { selectedMedia.contains(it) }
+                                            }
+                                            selectedMedia.addAll(toAdd)
+                                        } else selectedMedia.removeAll(item.data)
+                                    }
+                                }
+                            }
+                        )
                     }
 
-                    MediaImage(
-                        media = item.media,
-                        canClick = !isSelectionOfAll || !allowMultiple,
-                        onItemClick = {
-                            hapticFeedback.longPress()
-                            onMediaClick(it)
-                        },
-                        onItemLongClick = {
-                            imagePreviewUri = it.uri
-                        },
-                        selectionIndex = if (selectedMedia.size > 1) selectionIndex else -1,
-                        isSelected = selectionIndex >= 0
-                    )
+                    is MediaItem.MediaViewItem -> {
+                        val selectionIndex by remember(selectedMedia, item.media) {
+                            derivedStateOf {
+                                selectedMedia.indexOf(item.media)
+                            }
+                        }
+
+                        MediaImage(
+                            media = item.media,
+                            canClick = !isSelectionOfAll || !allowMultiple,
+                            onItemClick = {
+                                hapticFeedback.longPress()
+                                onMediaClick(it)
+                            },
+                            onItemLongClick = {
+                                imagePreviewUri = it.uri
+                            },
+                            selectionIndex = if (selectedMedia.size > 1) selectionIndex else -1,
+                            isSelected = selectionIndex >= 0
+                        )
+                    }
                 }
             }
         }

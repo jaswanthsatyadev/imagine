@@ -30,3 +30,9 @@ val FastInvokeEasing = CubicBezierEasing(0f, 0f, 0f, 1f)
 val OverslideEasing = CubicBezierEasing(0.5f, 0.5f, 1.0f, 0.25f)
 
 val RotationEasing = CubicBezierEasing(0.46f, 0.03f, 0.52f, 0.96f)
+
+val EmphasizedEasing = CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f)
+
+val EmphasizedDecelerateEasing = CubicBezierEasing(0.05f, 0.7f, 0.1f, 1.0f)
+
+val EmphasizedAccelerateEasing = CubicBezierEasing(0.3f, 0.0f, 0.8f, 0.15f)

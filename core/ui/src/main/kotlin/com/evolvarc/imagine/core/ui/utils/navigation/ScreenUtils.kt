@@ -23,10 +23,12 @@ import androidx.compose.material.icons.automirrored.twotone.BrandingWatermark
 import androidx.compose.material.icons.outlined.Album
 import androidx.compose.material.icons.outlined.AutoFixHigh
 import androidx.compose.material.icons.outlined.ColorLens
+import androidx.compose.material.icons.outlined.ColorLens
 import androidx.compose.material.icons.outlined.DocumentScanner
 import androidx.compose.material.icons.outlined.FolderZip
 import androidx.compose.material.icons.outlined.GifBox
 import androidx.compose.material.icons.outlined.Gradient
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material.icons.outlined.PictureAsPdf
 import androidx.compose.material.icons.outlined.QrCode2
@@ -36,10 +38,13 @@ import androidx.compose.material.icons.twotone.Album
 import androidx.compose.material.icons.twotone.AutoFixHigh
 import androidx.compose.material.icons.twotone.ColorLens
 import androidx.compose.material.icons.twotone.Compare
+import androidx.compose.material.icons.twotone.ColorLens
+import androidx.compose.material.icons.twotone.Compare
 import androidx.compose.material.icons.twotone.DocumentScanner
 import androidx.compose.material.icons.twotone.FolderZip
 import androidx.compose.material.icons.twotone.GifBox
 import androidx.compose.material.icons.twotone.Gradient
+import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material.icons.twotone.Photo
 import androidx.compose.material.icons.twotone.PictureAsPdf
 import androidx.compose.material.icons.twotone.QrCode2
@@ -328,31 +333,43 @@ private object ScreenConstantsImpl : ScreenConstants {
                 entries = listOf(
                     SingleEdit(),
                     ResizeAndConvert(),
-                    FormatConversion(),
                     Crop(),
-                    ImageCutter(),
+                    Filter(),
                     WeightResize(),
                     LimitResize(),
-                    EditExif(),
-                    DeleteExif(),
                 ),
-                title = R.string.edit,
-                selectedIcon = Icons.Rounded.MiniEditLarge,
-                baseIcon = Icons.Outlined.MiniEditLarge
+                title = R.string.home,
+                selectedIcon = Icons.TwoTone.Home,
+                baseIcon = Icons.Outlined.Home
             ),
             ScreenGroup(
                 entries = listOf(
-                    Filter(),
-                    Draw(),
-                    EraseBackground(),
-                    MarkupLayers(),
+                    FormatConversion(),
+                    PdfTools(),
+                    GifTools(),
+                    WebpTools(),
+                    JxlTools(),
+                    ApngTools(),
+                    DocumentScanner,
+                    ScanQrCode(),
+                    Zip(),
+                ),
+                title = R.string.convert,
+                selectedIcon = Icons.TwoTone.ImageConvert,
+                baseIcon = Icons.Outlined.ImageConvert
+            ),
+            ScreenGroup(
+                entries = listOf(
                     CollageMaker(),
-                    ImageStitching(),
-                    ImageStacking(),
-                    ImageSplitting(),
+                    Draw(),
+                    MarkupLayers(),
                     Watermarking(),
                     GradientMaker(),
+                    MeshGradients,
                     NoiseGeneration,
+                    SvgMaker(),
+                    AsciiArt(),
+                    EraseBackground(),
                 ),
                 title = R.string.create,
                 selectedIcon = Icons.Rounded.WandShine,
@@ -361,34 +378,22 @@ private object ScreenConstantsImpl : ScreenConstants {
             ScreenGroup(
                 entries = listOf(
                     PickColorFromImage(),
-                    RecognizeText(),
-                    Compare(),
-                    ImagePreview(),
-                    WallpapersExport,
-                    Base64Tools(),
-                    SvgMaker(),
                     PaletteTools(),
-                    LoadNetImage(),
-                ),
-                title = R.string.image,
-                selectedIcon = Icons.Rounded.FileImage,
-                baseIcon = Icons.Outlined.FileImage
-            ),
-            ScreenGroup(
-                entries = listOf(
-                    PdfTools(),
-                    DocumentScanner,
-                    ScanQrCode(),
                     ColorTools,
-                    GifTools(),
-                    Cipher(),
+                    EditExif(),
+                    DeleteExif(),
+                    Base64Tools(),
                     ChecksumTools(),
-                    Zip(),
-                    AsciiArt(),
-                    JxlTools(),
-                    ApngTools(),
-                    WebpTools(),
-                    AudioCoverExtractor()
+                    Cipher(),
+                    ImageStitching(),
+                    ImageSplitting(),
+                    ImageStacking(),
+                    Compare(),
+                    LoadNetImage(),
+                    WallpapersExport,
+                    AudioCoverExtractor(),
+                    ImageCutter(),
+                    LibrariesInfo
                 ),
                 title = R.string.tools,
                 selectedIcon = Icons.Rounded.ServiceToolbox,

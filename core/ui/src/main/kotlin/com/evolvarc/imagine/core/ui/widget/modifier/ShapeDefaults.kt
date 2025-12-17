@@ -176,6 +176,8 @@ object ShapeDefaults {
 
     val default = RoundedCornerShape(16.dp)
 
+    val medium = default
+
     val large = RoundedCornerShape(20.dp)
 
     val extraLarge = RoundedCornerShape(24.dp)

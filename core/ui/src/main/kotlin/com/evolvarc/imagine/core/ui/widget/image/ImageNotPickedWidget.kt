@@ -125,7 +125,7 @@ fun SourceNotPickedWidget(
             ClickableActionIcon(
                 icon = icon,
                 onClick = onClick,
-                modifier = Modifier.size(targetSize / 3)
+                modifier = Modifier.size(targetSize / 2.5f)
             )
             AutoSizeText(
                 text = text,

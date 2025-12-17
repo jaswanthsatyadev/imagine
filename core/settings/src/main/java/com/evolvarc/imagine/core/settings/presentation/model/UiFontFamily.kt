@@ -244,6 +244,12 @@ sealed class UiFontFamily(
         variable = false
     )
 
+    data object Outfit : UiFontFamily(
+        fontRes = R.font.outfit,
+        name = "Outfit",
+        variable = true
+    )
+
     class Custom(
         name: String?,
         val filePath: String
@@ -296,6 +302,7 @@ sealed class UiFontFamily(
             LcdMoving -> DomainFontFamily.LcdMoving
             LcdOctagon -> DomainFontFamily.LcdOctagon
             Unisource -> DomainFontFamily.Unisource
+            Outfit -> DomainFontFamily.Outfit
             is Custom -> DomainFontFamily.Custom(name, filePath)
         }
     }
@@ -334,6 +341,7 @@ sealed class UiFontFamily(
                 LcdOctagon,
                 LcdMoving,
                 Unisource,
+                Outfit,
                 System
             ).sortedBy { it.name }
         }
@@ -417,6 +425,7 @@ fun DomainFontFamily.toUiFont(): UiFontFamily = when (this) {
     DomainFontFamily.LcdMoving -> UiFontFamily.LcdMoving
     DomainFontFamily.LcdOctagon -> UiFontFamily.LcdOctagon
     DomainFontFamily.Unisource -> UiFontFamily.Unisource
+    DomainFontFamily.Outfit -> UiFontFamily.Outfit
     is DomainFontFamily.Custom -> UiFontFamily.Custom(
         name = name,
         filePath = filePath

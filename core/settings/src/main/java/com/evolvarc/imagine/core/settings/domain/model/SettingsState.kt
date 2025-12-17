@@ -153,7 +153,7 @@ data class SettingsState(
                 addSizeInFilename = false,
                 addOriginalFilename = false,
                 randomizeFilename = false,
-                font = DomainFontFamily.System,
+                font = DomainFontFamily.Outfit,
                 fontScale = 1f,
                 allowCollectCrashlytics = true,
                 allowCollectAnalytics = true,

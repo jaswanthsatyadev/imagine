@@ -66,15 +66,15 @@ sealed class Screen(
         val htmlDescription: String
     ) : Screen(
         id = -5,
-        title = 0,
-        subtitle = 0
+        title = R.string.libraries_info,
+        subtitle = R.string.libraries_info_sub
     )
 
     @Serializable
     data object LibrariesInfo : Screen(
         id = -4,
-        title = 0,
-        subtitle = 0
+        title = R.string.libraries_info,
+        subtitle = R.string.libraries_info_sub
     )
 
     @Serializable
@@ -82,22 +82,22 @@ sealed class Screen(
         val searchQuery: String = ""
     ) : Screen(
         id = -3,
-        title = 0,
-        subtitle = 0
+        title = R.string.settings,
+        subtitle = R.string.settings_sub
     )
 
     @Serializable
     data object EasterEgg : Screen(
         id = -2,
-        title = 0,
-        subtitle = 0
+        title = R.string.easter_egg,
+        subtitle = R.string.easter_egg_sub
     )
 
     @Serializable
     data object Main : Screen(
         id = -1,
-        title = 0,
-        subtitle = 0
+        title = R.string.main_screen,
+        subtitle = R.string.main_screen_sub
     )
 
     @Serializable
@@ -834,8 +834,8 @@ sealed class Screen(
     @Serializable
     data object MeshGradients : Screen(
         id = -5,
-        title = 0,
-        subtitle = 0
+        title = R.string.mesh_gradients,
+        subtitle = R.string.mesh_gradients_sub
     ) {
          override fun searchKeywords() = listOf("gradient", "mesh", "wallpaper", "generate")
     }

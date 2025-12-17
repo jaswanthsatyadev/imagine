@@ -46,6 +46,7 @@ sealed class DomainFontFamily(val ordinal: Int) {
     data object LcdOctagon : DomainFontFamily(24)
     data object LcdMoving : DomainFontFamily(25)
     data object Unisource : DomainFontFamily(26)
+    data object Outfit : DomainFontFamily(27)
     data object System : DomainFontFamily(0)
 
     class Custom(
@@ -103,6 +104,7 @@ sealed class DomainFontFamily(val ordinal: Int) {
                 24 -> LcdOctagon
                 25 -> LcdMoving
                 26 -> Unisource
+                27 -> Outfit
                 else -> null
             }
 

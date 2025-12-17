@@ -170,6 +170,10 @@ afterEvaluate {
             task.enabled = flavor.extra.get("gmsEnabled") == true
         }
     }
+    
+    tasks.matching { it.name.contains("processMarketDebugGoogleServices") }.configureEach {
+        enabled = false
+    }
 }
 
 fun Project.dependencySubstitution(action: DependencySubstitutions.() -> Unit) {

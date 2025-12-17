@@ -128,7 +128,8 @@ internal fun MainContentImpl(
                     onGetClipList = onGetClipList,
                     onNavigateToScreenWithPopUpTo = onNavigate,
                     onNavigationBarItemChange = { selectedNavigationItem = it },
-                    onToggleFavorite = onToggleFavorite
+                    onToggleFavorite = onToggleFavorite,
+                    selectedNavigationItem = selectedNavigationItem
                 )
             }
 

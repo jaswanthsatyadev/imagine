@@ -82,6 +82,7 @@ fun ImagineTheme(
             MaterialTheme(
                 motionScheme = CustomMotionScheme,
                 colorScheme = modifiedColorScheme(),
+                shapes = Shapes,
                 content = content
             )
         }

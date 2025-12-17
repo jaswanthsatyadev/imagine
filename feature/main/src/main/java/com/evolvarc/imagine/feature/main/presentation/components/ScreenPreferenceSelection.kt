@@ -22,6 +22,8 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -52,7 +54,7 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ManageSearch
 import androidx.compose.material.icons.outlined.ContentPasteOff
@@ -65,12 +67,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -81,6 +85,7 @@ import com.evolvarc.imagine.core.resources.R
 import com.evolvarc.imagine.core.resources.icons.BookmarkOff
 import com.evolvarc.imagine.core.resources.icons.BookmarkRemove
 import com.evolvarc.imagine.core.settings.presentation.provider.LocalSettingsState
+import com.evolvarc.imagine.core.ui.utils.animation.EmphasizedDecelerateEasing
 import com.evolvarc.imagine.core.ui.utils.helper.clipList
 import com.evolvarc.imagine.core.ui.utils.helper.rememberClipboardData
 import com.evolvarc.imagine.core.ui.utils.navigation.Screen
@@ -108,6 +113,7 @@ internal fun RowScope.ScreenPreferenceSelection(
     onChangeShowScreenSearch: (Boolean) -> Unit,
     onToggleFavorite: (Screen) -> Unit,
     showNavRail: Boolean,
+    selectedNavigationItem: Int
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalComponentActivity.current
@@ -193,89 +199,152 @@ internal fun RowScope.ScreenPreferenceSelection(
                             onToggleFavorite = onToggleFavorite
                         )
                     } else {
-                        LazyVerticalStaggeredGrid(
-                            reverseLayout = showScreenSearch && screenSearchKeyword.isNotEmpty() && canSearchScreens,
-                            modifier = Modifier.fillMaxSize(),
-                            columns = StaggeredGridCells.Adaptive(220.dp),
-                            verticalItemSpacing = 12.dp,
-                            horizontalArrangement = Arrangement.spacedBy(
-                                space = 12.dp,
-                                alignment = Alignment.CenterHorizontally
-                            ),
-                            contentPadding = contentPadding,
-                            content = {
-                                items(currentScreenList) { screen ->
-                                    PreferenceItemOverload(
-                                        onClick = {
-                                            onNavigateToScreenWithPopUpTo(screen)
-                                        },
-                                        color = MaterialTheme.colorScheme.surfaceContainerLow,
-                                        modifier = Modifier
-                                            .widthIn(min = 1.dp)
-                                            .fillMaxWidth()
-                                            .animateItem(),
-                                        shape = ShapeDefaults.default,
-                                        title = stringResource(screen.title),
-                                        subtitle = stringResource(screen.subtitle),
-                                        badge = {
-                                            AnimatedVisibility(
-                                                visible = screen.isBetaFeature,
-                                                modifier = Modifier
-                                                    .align(Alignment.CenterVertically)
-                                                    .padding(
-                                                        start = 4.dp,
-                                                        bottom = 2.dp,
-                                                        top = 2.dp
-                                                    ),
-                                                enter = fadeIn(),
-                                                exit = fadeOut()
-                                            ) {
-                                                Badge(
-                                                    content = {
-                                                        Text(stringResource(R.string.beta))
-                                                    },
-                                                    containerColor = MaterialTheme.colorScheme.tertiary,
-                                                    contentColor = MaterialTheme.colorScheme.onTertiary
-                                                )
+                        val groupOptions = settingsState.groupOptionsByTypes
+                        if (selectedNavigationItem == 0 && !isSearching && groupOptions) {
+                            HomeHub(
+                                screenList = currentScreenList,
+                                onNavigate = onNavigateToScreenWithPopUpTo,
+                                contentPadding = contentPadding
+                            )
+                        } else if (selectedNavigationItem == 1 && !isSearching && groupOptions) {
+                            ConvertHub(
+                                screenList = currentScreenList,
+                                onNavigate = onNavigateToScreenWithPopUpTo,
+                                contentPadding = contentPadding
+                            )
+                        } else if (selectedNavigationItem == 2 && !isSearching && groupOptions) {
+                            CreateHub(
+                                screenList = currentScreenList,
+                                onNavigate = onNavigateToScreenWithPopUpTo,
+                                contentPadding = contentPadding
+                            )
+                        } else if (selectedNavigationItem == 3 && !isSearching && groupOptions) {
+                            ToolsHub(
+                                screenList = currentScreenList,
+                                onNavigate = onNavigateToScreenWithPopUpTo,
+                                contentPadding = contentPadding
+                            )
+                        } else {
+                            LazyVerticalStaggeredGrid(
+                                reverseLayout = showScreenSearch && screenSearchKeyword.isNotEmpty() && canSearchScreens,
+                                modifier = Modifier.fillMaxSize(),
+                                columns = StaggeredGridCells.Adaptive(220.dp),
+                                verticalItemSpacing = 12.dp,
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    space = 12.dp,
+                                    alignment = Alignment.CenterHorizontally
+                                ),
+                                contentPadding = contentPadding,
+                                content = {
+                                    itemsIndexed(
+                                        items = currentScreenList,
+                                        key = { _, screen -> screen.id }
+                                    ) { index, screen ->
+                                        val itemAlpha = remember { Animatable(0f) }
+                                        val itemTranslationY = remember { Animatable(50f) }
+
+                                        LaunchedEffect(Unit) {
+                                            val delay = (index * 30).coerceAtMost(500)
+                                            itemAlpha.animateTo(1f, tween(300, delay, EmphasizedDecelerateEasing))
+                                            itemTranslationY.animateTo(0f, tween(400, delay, EmphasizedDecelerateEasing))
+                                        }
+
+                                        Box(
+                                            modifier = Modifier.graphicsLayer {
+                                                alpha = itemAlpha.value
+                                                translationY = itemTranslationY.value
                                             }
-                                        },
-                                        endIcon = {
-                                            Row(
-                                                verticalAlignment = Alignment.CenterVertically,
-                                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                                            ) {
-                                                if (!settingsState.groupOptionsByTypes) {
-                                                    EnhancedIconButton(
-                                                        onClick = {
-                                                            onToggleFavorite(screen)
-                                                        },
-                                                        modifier = Modifier.offset(8.dp)
+                                        ) {
+                                            PreferenceItemOverload(
+                                                onClick = {
+                                                    onNavigateToScreenWithPopUpTo(screen)
+                                                },
+                                                color = MaterialTheme.colorScheme.surfaceContainerLow,
+                                                modifier = Modifier
+                                                    .widthIn(min = 1.dp)
+                                                    .fillMaxWidth()
+                                                    .animateItem(),
+                                                shape = ShapeDefaults.default,
+                                                title = stringResource(screen.title),
+                                                subtitle = stringResource(screen.subtitle),
+                                                badge = {
+                                                    AnimatedVisibility(
+                                                        visible = screen.isBetaFeature,
+                                                        modifier = Modifier
+                                                            .align(Alignment.CenterVertically)
+                                                            .padding(
+                                                                start = 4.dp,
+                                                                bottom = 2.dp,
+                                                                top = 2.dp
+                                                            ),
+                                                        enter = fadeIn(),
+                                                        exit = fadeOut()
                                                     ) {
-                                                        val inFavorite by remember(
-                                                            settingsState.favoriteScreenList,
-                                                            screen
-                                                        ) {
-                                                            derivedStateOf {
-                                                                settingsState.favoriteScreenList.find { it == screen.id } != null
-                                                            }
-                                                        }
-                                                        AnimatedContent(
-                                                            targetState = inFavorite,
-                                                            transitionSpec = {
-                                                                (fadeIn() + scaleIn(initialScale = 0.85f))
-                                                                    .togetherWith(
-                                                                        fadeOut() + scaleOut(
-                                                                            targetScale = 0.85f
-                                                                        )
+                                                        Badge(
+                                                            content = {
+                                                                Text(stringResource(R.string.beta))
+                                                            },
+                                                            containerColor = MaterialTheme.colorScheme.tertiary,
+                                                            contentColor = MaterialTheme.colorScheme.onTertiary
+                                                        )
+                                                    }
+                                                },
+                                                endIcon = {
+                                                    Row(
+                                                        verticalAlignment = Alignment.CenterVertically,
+                                                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                                    ) {
+                                                        if (!settingsState.groupOptionsByTypes) {
+                                                            EnhancedIconButton(
+                                                                onClick = {
+                                                                    onToggleFavorite(screen)
+                                                                },
+                                                                modifier = Modifier.offset(8.dp)
+                                                            ) {
+                                                                val inFavorite by remember(
+                                                                    settingsState.favoriteScreenList,
+                                                                    screen
+                                                                ) {
+                                                                    derivedStateOf {
+                                                                        settingsState.favoriteScreenList.find { it == screen.id } != null
+                                                                    }
+                                                                }
+                                                                AnimatedContent(
+                                                                    targetState = inFavorite,
+                                                                    transitionSpec = {
+                                                                        (fadeIn() + scaleIn(initialScale = 0.85f))
+                                                                            .togetherWith(
+                                                                                fadeOut() + scaleOut(
+                                                                                    targetScale = 0.85f
+                                                                                )
+                                                                            )
+                                                                    }
+                                                                ) { isInFavorite ->
+                                                                    val icon by remember(isInFavorite) {
+                                                                        derivedStateOf {
+                                                                            if (isInFavorite) Icons.Rounded.BookmarkRemove
+                                                                            else Icons.Rounded.BookmarkBorder
+                                                                        }
+                                                                    }
+                                                                    Icon(
+                                                                        imageVector = icon,
+                                                                        contentDescription = null
                                                                     )
-                                                            }
-                                                        ) { isInFavorite ->
-                                                            val icon by remember(isInFavorite) {
-                                                                derivedStateOf {
-                                                                    if (isInFavorite) Icons.Rounded.BookmarkRemove
-                                                                    else Icons.Rounded.BookmarkBorder
                                                                 }
                                                             }
+                                                        }
+                                                    }
+                                                },
+                                                startIcon = {
+                                                    AnimatedContent(
+                                                        targetState = screen.icon,
+                                                        transitionSpec = {
+                                                            (slideInVertically() + fadeIn() + scaleIn())
+                                                                .togetherWith(slideOutVertically { it / 2 } + fadeOut() + scaleOut())
+                                                                .using(SizeTransform(false))
+                                                        }
+                                                    ) { icon ->
+                                                        icon?.let {
                                                             Icon(
                                                                 imageVector = icon,
                                                                 contentDescription = null
@@ -283,29 +352,12 @@ internal fun RowScope.ScreenPreferenceSelection(
                                                         }
                                                     }
                                                 }
-                                            }
-                                        },
-                                        startIcon = {
-                                            AnimatedContent(
-                                                targetState = screen.icon,
-                                                transitionSpec = {
-                                                    (slideInVertically() + fadeIn() + scaleIn())
-                                                        .togetherWith(slideOutVertically { it / 2 } + fadeOut() + scaleOut())
-                                                        .using(SizeTransform(false))
-                                                }
-                                            ) { icon ->
-                                                icon?.let {
-                                                    Icon(
-                                                        imageVector = icon,
-                                                        contentDescription = null
-                                                    )
-                                                }
-                                            }
+                                            )
                                         }
-                                    )
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
                 }
                 val toastHostState = LocalToastHostState.current

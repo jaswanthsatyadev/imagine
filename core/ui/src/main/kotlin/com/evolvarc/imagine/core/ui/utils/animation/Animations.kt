@@ -80,19 +80,21 @@ fun <NavigationChild : Any> toolboxPredictiveBackAnimation(
     fallbackAnimation = stackAnimation(
         fade(
             tween(
-                durationMillis = 300,
-                easing = AlphaEasing
+                durationMillis = 600,
+                easing = EmphasizedDecelerateEasing
             )
         ) + slide(
             tween(
-                durationMillis = 400,
-                easing = FancyTransitionEasing
+                durationMillis = 500,
+                easing = EmphasizedEasing
             )
         ) + scale(
             tween(
-                durationMillis = 500,
-                easing = PointToPointEasing
-            )
+                durationMillis = 600,
+                easing = EmphasizedDecelerateEasing
+            ),
+            frontFactor = 0.95F,
+            backFactor = 0.95F
         )
     ),
     selector = { backEvent, _, _ -> androidPredictiveBackAnimatableV1(backEvent) },
