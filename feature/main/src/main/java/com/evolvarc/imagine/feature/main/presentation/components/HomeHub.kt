@@ -188,18 +188,19 @@ private fun HeroCard(onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp)
-            .height(180.dp)
+            .height(200.dp)
             .container(
                 resultPadding = 0.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
-                shape = ShapeDefaults.large
+                shape = ShapeDefaults.extraLarge,
+                autoShadowElevation = 4.dp
             )
             .clickable(onClick = onClick)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp),
+                .padding(28.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
@@ -208,18 +209,18 @@ private fun HeroCard(onClick: () -> Unit) {
                     style = MaterialTheme.typography.displaySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Start your creative journey",
+                    text = "Transform your photos with professional tools",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f)
                 )
             }
             Icon(
                 imageVector = Icons.Rounded.AddPhotoAlternate,
                 contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                modifier = Modifier.size(72.dp),
+                tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
             )
         }
         
@@ -228,24 +229,24 @@ private fun HeroCard(onClick: () -> Unit) {
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(24.dp)
-                .size(24.dp),
-            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                .padding(28.dp)
+                .size(28.dp),
+            tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
         )
     }
 }
 
 @Composable
 private fun QuickActionsRow(onNavigate: (Screen) -> Unit) {
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+    Column(modifier = Modifier.padding(vertical = 12.dp)) {
         Text(
             text = "Quick Actions",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 12.dp)
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             QuickActionItem(
                 title = "Resize",
@@ -278,10 +279,12 @@ private fun QuickActionItem(
 ) {
     Column(
         modifier = modifier
+            .height(110.dp)
             .container(
-                color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f),
-                shape = ShapeDefaults.medium,
-                resultPadding = 16.dp
+                color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.6f),
+                shape = ShapeDefaults.large,
+                resultPadding = 20.dp,
+                autoShadowElevation = 2.dp
             )
             .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -291,9 +294,9 @@ private fun QuickActionItem(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier.size(32.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = title,
             style = MaterialTheme.typography.labelLarge,

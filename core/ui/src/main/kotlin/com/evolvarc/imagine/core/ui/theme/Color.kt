@@ -147,31 +147,31 @@ fun Color.harmonizeWithPrimary(
 fun Int.toColor() = Color(this)
 
 inline val Green: Color
-    @Composable get() = Color(0xFFBADB94).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFF34C759).harmonizeWithPrimary(0.15f)
 
 inline val Red: Color
-    @Composable get() = Color(0xFFE06565).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFFFF3B30).harmonizeWithPrimary(0.15f)
 
 inline val Blue: Color
-    @Composable get() = Color(0xFF0088CC).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFF007AFF).harmonizeWithPrimary(0.15f)
 
 inline val Black: Color
-    @Composable get() = Color(0xFF142329).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFF1C1C1E).harmonizeWithPrimary(0.12f)
 
 inline val StrongBlack: Color
-    @Composable get() = Color(0xFF141414).harmonizeWithPrimary(0.07f)
+    @Composable get() = Color(0xFF000000).harmonizeWithPrimary(0.05f)
 
 inline val White: Color
-    @Composable get() = Color(0xFFFFFFFF).harmonizeWithPrimary(0.07f)
+    @Composable get() = Color(0xFFFFFFFF).harmonizeWithPrimary(0.03f)
 
 inline val BitcoinColor: Color
-    @Composable get() = Color(0xFFF7931A).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFFFF9500).harmonizeWithPrimary(0.15f)
 
 inline val USDTColor: Color
-    @Composable get() = Color(0xFF50AF95).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFF30D158).harmonizeWithPrimary(0.15f)
 
 inline val TONSpaceColor: Color
-    @Composable get() = Color(0xFF232328).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFF2C2C2E).harmonizeWithPrimary(0.12f)
 
 inline val TONColor: Color
-    @Composable get() = Color(0xFF0098EA).harmonizeWithPrimary(0.2f)
+    @Composable get() = Color(0xFF0A84FF).harmonizeWithPrimary(0.15f)

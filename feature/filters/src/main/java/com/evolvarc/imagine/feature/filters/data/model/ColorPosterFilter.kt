@@ -31,7 +31,7 @@ import kotlin.math.roundToInt
 
 @FilterInject
 internal class ColorPosterFilter(
-    override val value: Pair<Float, ColorModel> = 0.5f to Color(0xFF4DFFE4).toModel()
+    override val value: Pair<Float, ColorModel> = 0.5f to Color(0xFF64D2FF).toModel()
 ) : Transformation<Bitmap>, Filter.ColorPoster {
 
     override val cacheKey: String

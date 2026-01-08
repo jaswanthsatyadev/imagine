@@ -183,6 +183,11 @@ object ShapeDefaults {
     val extraLarge = RoundedCornerShape(24.dp)
 
     val extremeLarge = RoundedCornerShape(28.dp)
+    
+    // Apple-inspired shapes for premium feel
+    val superLarge = RoundedCornerShape(32.dp)
+    
+    val ultraLarge = RoundedCornerShape(40.dp)
 
     @Composable
     private inline fun CornerSize.animate(): Dp = animateDpAsState(

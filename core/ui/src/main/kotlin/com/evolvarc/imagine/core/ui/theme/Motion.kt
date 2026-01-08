@@ -28,23 +28,24 @@ import com.evolvarc.imagine.core.ui.utils.animation.FancyTransitionEasing
 
 
 internal val CustomMotionScheme: MotionScheme = object : MotionScheme {
-    val SpringDefaultSpatialDamping = 0.8f
-    val SpringDefaultSpatialStiffness = 380.0f
-    val SpringDefaultEffectsDamping = 1.0f
-    val SpringDefaultEffectsStiffness = 1600.0f
-    val SpringFastSpatialDamping = 0.6f
-    val SpringFastSpatialStiffness = 800.0f
-    val SpringFastEffectsDamping = 1.0f
-    val SpringFastEffectsStiffness = 3800.0f
-    val SpringSlowSpatialDamping = 0.8f
-    val SpringSlowSpatialStiffness = 200.0f
-    val SpringSlowEffectsDamping = 1.0f
-    val SpringSlowEffectsStiffness = 800.0f
+    // Apple-inspired spring physics for buttery smooth animations
+    val SpringDefaultSpatialDamping = 0.85f
+    val SpringDefaultSpatialStiffness = 400.0f
+    val SpringDefaultEffectsDamping = 0.95f
+    val SpringDefaultEffectsStiffness = 1400.0f
+    val SpringFastSpatialDamping = 0.75f
+    val SpringFastSpatialStiffness = 900.0f
+    val SpringFastEffectsDamping = 0.9f
+    val SpringFastEffectsStiffness = 3200.0f
+    val SpringSlowSpatialDamping = 0.88f
+    val SpringSlowSpatialStiffness = 250.0f
+    val SpringSlowEffectsDamping = 0.95f
+    val SpringSlowEffectsStiffness = 900.0f
 
     private val defaultSpatialSpec =
-        tween<Any>(
-            durationMillis = 400,
-            easing = FancyTransitionEasing
+        spring<Any>(
+            dampingRatio = SpringDefaultSpatialDamping,
+            stiffness = SpringDefaultSpatialStiffness
         )
 
     private val fastSpatialSpec =

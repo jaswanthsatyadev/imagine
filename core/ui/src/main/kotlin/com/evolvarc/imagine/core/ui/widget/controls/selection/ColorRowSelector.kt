@@ -206,8 +206,8 @@ fun ColorRowSelector(
 private val defaultColorList by lazy {
     listOf(
         Color(0xFFFFFFFF),
-        Color(0xFF768484),
-        Color(0xFF333333),
+        Color(0xFFAEAEB2),
+        Color(0xFF636366),
         Color(0xFF000000),
     ).plus(
         ColorSelectionRowDefaults.colorList.reversed().drop(4)

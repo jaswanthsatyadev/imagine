@@ -92,6 +92,7 @@
     <string name="compare_sub">Compare two given images</string>
     <string name="pick_two_images">Pick two images to start</string>
     <string name="pick_images">Pick images</string>
+    <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="night_mode">Night Mode</string>
     <string name="dark">Dark</string>
@@ -100,6 +101,29 @@
     <string name="dynamic_colors">Dynamic colors</string>
     <string name="customization">Customization</string>
     <string name="allow_image_monet">Allow image monet</string>
+    
+    <!-- Settings Categories -->
+    <string name="appearance">Appearance</string>
+    <string name="appearance_subtitle">Theme, colors, fonts, and visual customization</string>
+    <string name="tools">Tools</string>
+    <string name="tools_subtitle">Configure feature-specific settings and defaults</string>
+    <string name="files">Files</string>
+    <string name="files_subtitle">Manage folders, filenames, and file handling</string>
+    <string name="privacy_and_performance">Privacy &amp; Performance</string>
+    <string name="privacy_and_performance_subtitle">Security, cache, and app behavior</string>
+    <string name="about_and_support">About &amp; Support</string>
+    <string name="about_and_support_subtitle">App info, updates, and support options</string>
+    
+    <!-- Appearance Presets -->
+    <string name="preset_minimal">Minimal</string>
+    <string name="preset_minimal_desc">Clean, distraction-free design for focused work</string>
+    <string name="preset_vibrant">Vibrant</string>
+    <string name="preset_vibrant_desc">Colorful, playful design with dynamic colors</string>
+    <string name="preset_professional">Professional</string>
+    <string name="preset_professional_desc">Refined, business-appropriate styling</string>
+    <string name="appearance_presets">Appearance Presets</string>
+    <string name="appearance_presets_subtitle">Quick-apply predefined styles</string>
+    
     <string name="allow_image_monet_sub">If enabled, when you choose an image to edit, app colors will be adopted to this image</string>
     <string name="language">Language</string>
     <string name="amoled_mode">Amoled mode</string>
@@ -193,6 +217,7 @@
     <string name="filter">Filter</string>
     <string name="filter_sub">Apply filter chains to images</string>
     <string name="filters">Filters</string>
+    <string name="intensity">Intensity</string>
     <string name="light_aka_illumination">Light</string>
     <string name="color_filter">Color filter</string>
     <string name="alpha">Alpha</string>
@@ -289,6 +314,26 @@
     <string name="encryption">Encryption</string>
     <string name="key">Key</string>
     <string name="file_proceed">File processed</string>
+    <string name="processed">processed</string>
+    <string name="selected">selected</string>
+    <string name="select_images">Select images</string>
+    <string name="select_all">Select all</string>
+    <string name="processing">Processing</string>
+    <string name="paused">Paused</string>
+    <string name="completed">Completed</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="in_queue">in queue</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="stop">Stop</string>
+    <string name="high_quality">High Quality</string>
+    <string name="high_quality_sub">Maximum quality, larger file size</string>
+    <string name="balanced">Balanced</string>
+    <string name="balanced_sub">Good quality, reasonable file size</string>
+    <string name="fast_export">Fast Export</string>
+    <string name="fast_sub">Lower quality, optimized for speed</string>
+    <string name="export_presets">Export Presets</string>
+    <string name="export_presets_sub">Quick export configurations for batch processing</string>
     <string name="store_file_desc">Store this file on your device or use share action to put it wherever you want</string>
     <string name="features">Features</string>
     <string name="implementation">Implementation</string>
@@ -307,7 +352,6 @@
     <string name="auto_cache_clearing">Auto cache clearing</string>
     <string name="auto_cache_clearing_sub">If enabled app cache will be cleared on app startup</string>
     <string name="create">Create</string>
-    <string name="tools">Tools</string>
     <string name="group_options_by_type">Group options by type</string>
     <string name="group_options_by_type_sub">Groups options on the main screen by their type instead of a custom list arrangement</string>
     <string name="cannot_change_arrangement_while_options_grouping_enabled">Cannot change arrangement while option grouping is enabled</string>
@@ -1901,4 +1945,7 @@
     <string name="main_screen">Main</string>
     <string name="main_screen_sub">Home Screen</string>
     <string name="settings_sub">Configure application preferences</string>
+    <string name="advanced_options">Advanced Options</string>
+    <string name="got_it">Got it</string>
+    <string name="dont_show">Don\'t show again</string>
 </resources>

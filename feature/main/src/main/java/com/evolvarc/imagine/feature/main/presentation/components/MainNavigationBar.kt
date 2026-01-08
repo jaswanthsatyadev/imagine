@@ -48,7 +48,7 @@ internal fun MainNavigationBar(
         modifier = Modifier
             .drawHorizontalStroke(top = true)
             .height(
-                80.dp + WindowInsets.systemBars
+                84.dp + WindowInsets.systemBars
                     .asPaddingValues()
                     .calculateBottomPadding()
             ),

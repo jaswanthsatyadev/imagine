@@ -36,3 +36,14 @@ val EmphasizedEasing = CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f)
 val EmphasizedDecelerateEasing = CubicBezierEasing(0.05f, 0.7f, 0.1f, 1.0f)
 
 val EmphasizedAccelerateEasing = CubicBezierEasing(0.3f, 0.0f, 0.8f, 0.15f)
+
+// Apple-inspired easing curves for premium interactions
+val AppleEaseInOut = CubicBezierEasing(0.42f, 0.0f, 0.58f, 1.0f)
+
+val AppleEaseOut = CubicBezierEasing(0.0f, 0.0f, 0.58f, 1.0f)
+
+val AppleEaseIn = CubicBezierEasing(0.42f, 0.0f, 1.0f, 1.0f)
+
+val AppleSpring = CubicBezierEasing(0.36f, 0.66f, 0.04f, 1.0f)
+
+val AppleSmoothEasing = CubicBezierEasing(0.28f, 0.0f, 0.0f, 1.0f)

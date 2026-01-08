@@ -17,3 +17,7 @@ google-services.json
 
 # Sentry
 sentry.properties
+
+
+PHASE_*.md
+REDESIGN_*.md

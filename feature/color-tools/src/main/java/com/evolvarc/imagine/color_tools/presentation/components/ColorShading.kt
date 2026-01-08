@@ -84,7 +84,7 @@ internal fun ColorShading(
     val tones by remember(selectedColor, shadingVariation) {
         derivedStateOf {
             selectedColor.mixWith(
-                color = Color(0xff8e918f),
+                color = Color(0xFFAEAEB2),
                 variations = shadingVariation,
                 maxPercent = 0.9f
             )

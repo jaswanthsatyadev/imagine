@@ -456,6 +456,6 @@ private fun NightMode.isNightMode(): Boolean = when (this) {
 }
 
 val defaultColorTuple = ColorTuple(
-    if (BuildConfig.DEBUG) Color(0xFF3ADBD6)
-    else Color(0xFF8FDB3A)
+    if (BuildConfig.DEBUG) Color(0xFF007AFF)
+    else Color(0xFF007AFF)
 )

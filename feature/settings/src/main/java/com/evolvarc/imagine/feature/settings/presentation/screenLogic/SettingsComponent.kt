@@ -294,10 +294,10 @@ class SettingsComponent @AssistedInject internal constructor(
         if (emoji.contains("shoe", true)) {
             setFont(DomainFontFamily.DejaVu)
             val colorTuple = ColorTuple(
-                primary = Color(0xFF6D216D),
-                secondary = Color(0xFF240A95),
-                tertiary = Color(0xFFFFFFA0),
-                surface = Color(0xFF1D2D3D)
+                primary = Color(0xFF5E5CE6),
+                secondary = Color(0xFFBF5AF2),
+                tertiary = Color(0xFF30D158),
+                surface = Color(0xFF1C1C1E)
             )
             val colorTupleS = listOf(colorTuple).asString()
             setColorTuple(colorTuple)
