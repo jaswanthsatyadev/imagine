@@ -159,7 +159,8 @@ data class UiSettingsState(
     val allowSkipIfLarger: Boolean,
     val customAsciiGradients: Set<String>,
     val isScreenSelectionLauncherMode: Boolean,
-    val spotHealMode: Int
+    val spotHealMode: Int,
+    val selectedAppearancePreset: String? = null
 )
 
 fun UiSettingsState.isFirstLaunch(
