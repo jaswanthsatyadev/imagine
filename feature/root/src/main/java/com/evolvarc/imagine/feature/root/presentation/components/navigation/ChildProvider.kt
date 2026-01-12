@@ -532,7 +532,7 @@ internal class ChildProvider @Inject constructor(
             )
         )
 
-        is Screen.MeshGradients -> MeshGradients(
+        Screen.MeshGradients -> MeshGradients(
             meshGradientsComponentFactory(
                 componentContext = componentContext,
                 onGoBack = ::navigateBack,
@@ -576,7 +576,7 @@ internal class ChildProvider @Inject constructor(
             )
         )
 
-        is Screen.WallpapersExport -> WallpapersExport(
+        Screen.WallpapersExport -> WallpapersExport(
             wallpapersExportComponentFactory(
                 componentContext = componentContext,
                 onGoBack = ::navigateBack,
