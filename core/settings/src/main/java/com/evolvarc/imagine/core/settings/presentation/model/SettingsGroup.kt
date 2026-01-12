@@ -74,7 +74,7 @@ sealed class SettingsGroup(
         titleId = R.string.customization,
         settingsList = listOf(
             Setting.ColorScheme,
-            Setting.DynamicColors,
+            // Setting.DynamicColors, // DISABLED: Dynamic wallpaper colors
             Setting.AmoledMode,
             Setting.IconShape
         ),
@@ -87,7 +87,7 @@ sealed class SettingsGroup(
         titleId = R.string.secondary_customization,
         settingsList = listOf(
             Setting.ColorBlindScheme,
-            Setting.AllowImageMonet,
+            // Setting.AllowImageMonet, // DISABLED: Image-based dynamic colors
             Setting.BorderThickness,
             Setting.MainScreenTitle
         ),
@@ -346,6 +346,8 @@ sealed class SettingsGroup(
         initialState = false
     )
 
+    // DISABLED: Emoji functionality
+    /*
     data object Emoji : SettingsGroup(
         id = 23,
         icon = Icons.Rounded.Cool,
@@ -357,6 +359,7 @@ sealed class SettingsGroup(
         ),
         initialState = false
     )
+    */
 
     data object Confetti : SettingsGroup(
         id = 24,
@@ -397,7 +400,7 @@ sealed class SettingsGroup(
                 SecondaryCustomization,
                 NightMode,
                 Layout,
-                Emoji,
+                // Emoji, // DISABLED
                 Confetti,
                 Shadows,
                 Haptics,

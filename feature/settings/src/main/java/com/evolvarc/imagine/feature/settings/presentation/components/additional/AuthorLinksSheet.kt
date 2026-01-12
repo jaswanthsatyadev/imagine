@@ -85,12 +85,12 @@ fun AuthorLinksSheet(
                     PreferenceItem(
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         onClick = {
-                            linkHandler.openUri(AUTHOR_TG)
+                            linkHandler.openUri(AUTHOR_TG) // Now points to LinkedIn
                         },
                         endIcon = Icons.Rounded.Link,
                         shape = top,
-                        title = stringResource(R.string.telegram),
-                        startIcon = Icons.Rounded.Telegram,
+                        title = "LinkedIn", // Changed from Telegram to LinkedIn
+                        startIcon = Icons.Rounded.Telegram, // TODO: Consider changing icon
                         subtitle = stringResource(R.string.app_developer_nick)
                     )
                     Spacer(Modifier.height(4.dp))

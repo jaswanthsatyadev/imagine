@@ -39,36 +39,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TopAppBarEmoji() {
-    val settingsState = LocalSettingsState.current
-    val confettiHostState = LocalConfettiHostState.current
-    val scope = rememberCoroutineScope()
-
-    Box(
-        modifier = Modifier
-            .padding(end = 12.dp)
-            .scaleOnTap(
-                onRelease = {
-                    scope.launch {
-                        confettiHostState.showConfetti()
-                    }
-                }
-            )
-    ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-            repeat(5) {
-                AnimatedVisibility(
-                    visible = settingsState.emojisCount > it,
-                    enter = fadeIn() + slideInHorizontally(),
-                    exit = fadeOut() + slideOutHorizontally()
-                ) {
-                    EmojiItem(
-                        fontScale = LocalSettingsState.current.fontScale
-                            ?: LocalDensity.current.fontScale,
-                        emoji = settingsState.selectedEmoji?.toString(),
-                        fontSize = MaterialTheme.typography.headlineMedium.fontSize
-                    )
-                }
-            }
-        }
-    }
+    // DISABLED: Emoji functionality has been removed
+    // Previously displayed emojis in the top app bar
 }

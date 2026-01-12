@@ -41,7 +41,7 @@ sealed class SettingsCategory(
 ) {
     /**
      * APPEARANCE - All visual customization
-     * Includes: Theme, Colors, Fonts, Layout, Shadows, Emojis, Confetti
+     * Includes: Theme, Colors, Fonts, Layout, Shadows, Confetti
      */
     data object Appearance : SettingsCategory(
         id = 0,
@@ -54,7 +54,7 @@ sealed class SettingsCategory(
             SettingsGroup.NightMode,
             SettingsGroup.Layout,
             SettingsGroup.Font,
-            SettingsGroup.Emoji,
+            // SettingsGroup.Emoji, // DISABLED
             SettingsGroup.Confetti,
             SettingsGroup.Shadows
         )

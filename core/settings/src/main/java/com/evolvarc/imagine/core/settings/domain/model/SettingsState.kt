@@ -170,7 +170,7 @@ data class SettingsState(
                 themeContrastLevel = 0.0,
                 themeStyle = 0,
                 isInvertThemeColors = false,
-                screensSearchEnabled = false,
+                screensSearchEnabled = true, // Changed to true by default
                 hapticsStrength = 1,
                 overwriteFiles = false,
                 filenameSuffix = "",
